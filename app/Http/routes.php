@@ -11,13 +11,52 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@showWelcome');
 
-Route::get('/sayhello/{name}', function($name) {
-	if ($name == 'Chris') {
-		return redirect('/');
-	}
-	return "Hello $name";
-});
+Route::get('/sayhello/{name}', 'HomeController@sayHello');
+
+Route::get('/roll-dice/{guess}', 'HomeController@rollDice');
+
+Route::get('/roll-dice2/{guess}', 'HomeController@rollDice');
+
+Route::get('uppercase/{word}', 'HomeController@uppercase');
+
+Route::get('increment/{start?}', 'HomeController@increment');
+
+//Route::get('/uppercase/{word}', function($word) {
+//	return strtoupper($word);
+//});
+//
+//Route::get('/increment/{number}', function($number) {
+//    return ($number + 1);
+//});
+//
+//Route::get('/add/{uno}/{dos}', function($uno, $dos) {
+//    $data = [
+//        'uno' => $uno,
+//        'dos' => $dos
+//    ];
+//    return view('my-first-view', $data);
+//    return ($uno + $dos);
+//});
+//
+////function view($relativePath) {
+////    require '/resources/views' . $relativePath . '.php';
+////}
+//
+//Route::get('/rolldice/{guess}', function($guess) {
+//    $random = mt_rand(1, 6);
+//    $data = [
+//        'guess' => $guess,
+//        'random' => $random
+//    ];
+//    return view('roll-dice', $data);
+//});
+//
+//Route::get('/uppercase/{word}', function($word) {
+//    $data = [
+//        'word' => $word,
+//        'wordToUpper' => strtoupper($word)
+//    ];
+//    return view('uppercase', $data);
+//});
