@@ -23,6 +23,19 @@ Route::get('uppercase/{word}', 'HomeController@uppercase');
 
 Route::get('increment/{start?}', 'HomeController@increment');
 
+Route::resource('posts', 'PostsController');
+
+//Route::get('/posts/{post}', 'PostController@show');
+
+Route::get('orm-test', function ()
+{
+    $post = \App\Post::find(2);
+    $post->title = "New Title Goes Here.";
+    $post->save();
+    dd($post);
+});
+
+
 //Route::get('/uppercase/{word}', function($word) {
 //	return strtoupper($word);
 //});
