@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class PostsController extends Controller
@@ -16,12 +17,21 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (isset($request['search'])) {
+            $posts = Post::findPostBySearch($request['searchBy'], $request['search'])->paginate(10);
+        } else {
+            $posts = Post::with('user')->paginate(10);
+        }
         $data = [
-            'posts' => Post::paginate(2)
+            'posts' => $posts
         ];
         return view('posts.index', $data);
+    }
+
+    public function __construct() {
+        $this->middleware('auth');
     }
 
     /**
@@ -52,7 +62,7 @@ class PostsController extends Controller
         $post->title = $request['title'];
         $post->content = $request['content'];
         $post->url = $request['url'];
-        $post->created_by = 1;
+        $post->created_by = Auth::user()->id;
         Log::info($request->all());
         $post->save();
         return redirect()->action('PostsController@index');

@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Model\BaseModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class Post extends Model
+class Post extends BaseModel
 {
     protected $table = 'posts';
     public static $rules = [
@@ -12,4 +14,13 @@ class Post extends Model
         'content' => 'required',
         'url' => 'required|url',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'created_by');
+    }
+
+    public static function findPostBySearch($searchBy, $search) {
+        return Post::where($searchBy, 'LIKE', '%' . $search . '%');
+    }
 }

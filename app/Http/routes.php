@@ -25,6 +25,15 @@ Route::get('increment/{start?}', 'HomeController@increment');
 
 Route::resource('posts', 'PostsController');
 
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
 //Route::get('/posts/{post}', 'PostController@show');
 
 Route::get('orm-test', function ()
@@ -34,6 +43,7 @@ Route::get('orm-test', function ()
     $post->save();
     dd($post);
 });
+
 
 
 //Route::get('/uppercase/{word}', function($word) {

@@ -9,9 +9,9 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-    public function showWelcome($name)
+    public function showWelcome()
     {
-        return redirect()->action('welcome', array('Bob'));
+        return view('welcome');
     }
 
     public function sayHello($name) {
