@@ -13,10 +13,23 @@
                 <a href="{{action('PostsController@index')}}">Home</a>
                 <a href="{{action('PostsController@create')}}">Create New Post</a>
                 <a href="{{action('Auth\AuthController@getLogout')}}">Logout</a>
+                <a href="{{action('PostsController@index')}}?searchBy=created_by&search={{Auth::id()}}">My Posts</a>
             </div>
         @endif
         @yield('content')
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+        <script>
+            var $url = '';
+            $('.delete').click(function(e) {
+                e.preventDefault();
+                $url = $(this).data('href');
+                $('#deleteForm').attr('action', $url);
+            });
+
+            $('#confirmDelete').click(function() {
+                $('#deleteForm').submit();
+            });
+        </script>
     </body>
 </html>

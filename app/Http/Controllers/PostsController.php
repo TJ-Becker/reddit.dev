@@ -19,11 +19,17 @@ class PostsController extends Controller
      */
     public function index(Request $request)
     {
+        $posts = Post::with('user')->paginate(10);
+
         if (isset($request['search'])) {
-            $posts = Post::findPostBySearch($request['searchBy'], $request['search'])->paginate(10);
-        } else {
-            $posts = Post::with('user')->paginate(10);
+            $search = Post::findPostBySearch($request['searchBy'], $request['search']);
+            if ($search->get()) {
+                $posts = $search->paginate(10);
+            } else {
+                $posts = Post::with('user')->paginate(10);
+            }
         }
+
         $data = [
             'posts' => $posts
         ];
